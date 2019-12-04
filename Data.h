@@ -25,7 +25,6 @@ public:
     string province;
     string variety;
 
-
 };
 
 
