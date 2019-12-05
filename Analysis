@@ -1,0 +1,9 @@
+Bubble Sort and Selection sort are the two most inefficient ways of sorting data that we have learned. This can be
+seen in this lab, the graphs provided, and by the complexity. Bubble Sort uses two nested for loops with an if
+statement in the inner for loop. Due to this, the worst case of bubble sort is O(N^2). However, if bubble sort is
+optimized and used in the best case (a sorted list) its complexity can be as fast as O(N). In my alorithms used in this
+lab, I did not optimize BubbleSort so the complexity is still O(N^2). Selection Sort also uses two nested for loop with
+an if statement in the inner for loop. Due to this, the worst case for selection sort is O(N^2). Selection sort cannot
+be optimized, so the complexity for the best case (a sorted list) is also O(N^2). Both bubble sort and selection sort
+have a worst case complexity of O(N^2) making them extremely inefficient ways to sort data. If we need to sort a large
+set of data efficiently, we should use one of the other sorting algorithms we learned in class.

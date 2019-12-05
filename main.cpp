@@ -11,7 +11,7 @@ using namespace std;
 
 //code taken from powerpoint
 template<typename T>
-void BubbleSort(vector <T>& arr, T size) {
+void BubbleSort(vector <T>& arr, int size) {
     int i, j;
     bool swapped;
     for (i = 0; i < size - 1; i++) {
@@ -19,19 +19,15 @@ void BubbleSort(vector <T>& arr, T size) {
         // Last i elements are already in place
         for (j = 0; j < size - i - 1; j++) {
             if (arr[j] > arr[j + 1]) {
-                swap(&arr[j], &arr[j + 1]);
+                swap(arr[j], arr[j + 1]);
                 swapped = true;
             }
-        }
-        //if there wasn't any swap in the inner loop, stop
-        if (!swapped) {
-            break;
         }
     }
 }
 //code taken from power point
 template <typename T>
-void MinSort(vector <T>& arr, T size) {
+void MinSort(vector <T>& arr, int size) {
     int min;
     for (int i = 0; i < size - 1; ++i) {
         // Find index of smallest remaining element
@@ -47,10 +43,10 @@ void MinSort(vector <T>& arr, T size) {
 
 //code taken from Zybooks
 template<typename T>
-int Partition(vector<T> &numbers, T i, T k) {
-    T l;
-    T h;
-    T midpoint;
+int Partition(vector<T> &numbers, int i, int k) {
+    int l;
+    int h;
+    int midpoint;
     T pivot;
     T temp;
     bool done;
@@ -95,8 +91,8 @@ int Partition(vector<T> &numbers, T i, T k) {
 }
 //code taken from Zybooks
 template<typename T>
-void QuickSort(vector<T> &numbers, T i, T k) {
-    T j;
+void QuickSort(vector<T> &numbers, int i, int k) {
+    int j;
 
     /* Base case: If there are 1 or zero elements to sort,
      partition is already sorted */
@@ -116,12 +112,12 @@ void QuickSort(vector<T> &numbers, T i, T k) {
 
 //code taken from Zybooks
 template<typename T>
-void Merge(vector<T> &numbers, T i, T j, T k) {
+void Merge(vector<T> &numbers, int i, int j, int k) {
 
-    T mergedSize; // Size of merged partition
-    T mergePos; // Position to insert merged number
-    T leftPos; // Position of elements in left partition
-    T rightPos; // Position of elements in right partition
+    int mergedSize; // Size of merged partition
+    int mergePos; // Position to insert merged number
+    int leftPos; // Position of elements in left partition
+    int rightPos; // Position of elements in right partition
     //int *mergedNumbers = nullptr;
 
     mergePos = 0;
@@ -166,8 +162,8 @@ void Merge(vector<T> &numbers, T i, T j, T k) {
 }
 //code taken from Zybooks
 template<typename T>
-void MergeSort(vector<T> &numbers, T i, T k) {
-    T j;
+void MergeSort(vector<T> &numbers, int i, int k) {
+    int j;
 
     if (i < k) {
         j = (i + k) / 2;  // Find the midpoint in the partition
@@ -182,7 +178,8 @@ void MergeSort(vector<T> &numbers, T i, T k) {
 }
 
 int main() {
-    srand(time(0));
+    srand(time(NULL));
+    //string crty, point, pric, prov, var;
     //creates the two vectors
     vector<Data> dataV;
     vector<int> intV;
@@ -190,45 +187,71 @@ int main() {
     //opens the files
     ifstream in;
     ofstream out;
-    out.open("SortingTimes.csv");
-    in.open("../wineReviews.csv");
-
-    //checks to make sure the file is open if not stops running the program
-    if (!in.is_open()){
-        cout<<"File was not opened correctly!"<<endl;
-        return 1;
-    }
-
-    cout<<"Reading wineReviews.csv..."<<endl;
-
-    while (!in.eof()) {
-        //i++;
-        //cout<<"In while loop! i= "<< i; //<< endl;
-
-        //getline will go until the comma then move on
-        string crty, point, pric, prov, var;
-        getline(in, crty, ',');
-        getline(in, point, ',');
-        getline(in, pric, ',');
-        getline(in, prov, ',');
-        getline(in, var, '\n');
 
 
-        //changes from string to int
-        int points = stoi(point);
-        int price = stoi(pric);
+       out.open("SortingTimes.csv");
+        in.open("../wineReviews.csv");
 
-        //takes the data read in from wineReviews.csv and puts it into the dataV vector
-        Data info = Data(crty, points, price, prov, var);
-        dataV.push_back(info);
-    }
+        //checks to make sure the file is open if not stops running the program
+        if (!in.is_open()) {
+            cout << "File was not opened correctly!" << endl;
+            return 1;
+        }
+        cout << "Reading wineReviews.csv..." << endl;
 
-    //fills the intV vector with random numbers
-    for (int i=0;i<dataV.size();i++){
-        intV.push_back(rand()%100);
-    }
+        if (!out.is_open()) {
+            cout << "File was not opened correctly!" << endl;
+            return 1;
+        }
+        cout << "Writing in SortingTimes.csv..." << endl;
 
-    for (int j= dataV.size()/100;j<=dataV.size(); j+=dataV.size()/100) {
+        //int j;
+    //for (j = 100; j<dataV.size(); j= j+3000) {
+
+        //reads the entire document and inputs it into the vector
+        while (!in.eof()) {
+            //i++;
+            //cout<<"In while loop! i= "<<endl<< i; //<< endl;
+
+            //getline will go until the comma then move on
+            string crty, point, pric, prov, var;
+            getline(in, crty, ',');
+            getline(in, point, ',');
+            getline(in, pric, ',');
+            getline(in, prov, ',');
+            getline(in, var, '\n');
+
+
+            //changes from string to int if not inputs a 0
+            int points = 0;
+            if (point != "") {
+                points = stoi(point);
+            }
+            int price = 0;
+            if (pric != "") {
+                price = stoi(pric);
+            }
+
+            //takes the data read in from wineReviews.csv and puts it into the dataV vector
+            Data info = Data(crty, points, price, prov, var);
+            dataV.push_back(info);
+            //size++;
+        }
+
+        cout << "File has been read in.\n";
+
+        //fills the intV vector with random numbers
+        for (int i = 0; i < dataV.size(); i++) {
+            intV.push_back(rand() % 100);
+        }
+
+        //prints to the document to be exported headers for the data
+       out << " j , elapsed_dataV_B , elapsed_intV_B , elapsed_dataV_S , elapsed_intV_S , elapsed_dataV_Q , elapsed_intV_Q "
+                   ", elapsed_dataV_M , elapsed_intV_M , elapsed_dataV_B2 , elapsed_intV_B2 , elapsed_dataV_S2 , elapsed_intV_S2 "
+                   " , elapsed_dataV_Q2 , elapsed_intV_Q2 , elapsed_dataV_M2 , elapsed_intV_M2 " << '\n';
+
+
+    for (int j = 100; j<=dataV.size(); j= j+3000) {
 
         //creates 4 copies of the vector dataV
         vector<Data> dataV_B = dataV;
@@ -242,120 +265,176 @@ int main() {
         vector<int> intV_Q = intV;
         vector<int> intV_M = intV;
 
-        //begins the sorting using all the template algorithms and times each sorting
+
+        //cout<<"In for loop"<<endl;
+
+        //begins the sorting using all the template algorithms and times each sorting algorithm and prints out the times at the end
         cout << "Sorting using BubbleSort..." << endl;
 
         clock_t start_dataV_B = clock(); //start clock
-        BubbleSort(dataV_B, dataV_B.size());
+        BubbleSort(dataV_B, j);
         clock_t end_dataV_B = clock(); //end clock
         double elapsed_dataV_B = double(end_dataV_B - start_dataV_B) / CLOCKS_PER_SEC;
 
+        //cout<<"dataV sorted using bubble sort"<<endl;
+
+        //assert statement
+        for (int i = 1; i < j - 1; i++) {
+            assert(dataV_B.at(i - 1) <= dataV_B.at(i));
+        }
+        //cout<<"first bubbleSort assert"<<endl;
+
         clock_t start_intV_B = clock(); //start clock
-        BubbleSort(intV_B, intV_B.size());
+        BubbleSort(intV_B, j);
         clock_t end_intV_B = clock(); //end clock
         double elapsed_intV_B = double(end_intV_B - start_intV_B) / CLOCKS_PER_SEC; //calculate seconds passed
 
+        //cout<<"intV sorted using bublesort"<<endl;
 
-        cout << "BubleSort Complete!" << endl << "Sorting using SelectionSort..." << endl;
+        //assert statement
+        for (int i = 1; i < j - 1; i++) {
+            assert(intV_B.at(i - 1) <= intV_B.at(i));
+        }
+        //cout<<"second bubbleSort assert complete"<<endl;
+
+        cout << "BubbleSort Complete!" << endl << "Sorting using SelectionSort..." << endl;
 
         clock_t start_dataV_S = clock(); //start clock
-        MinSort(dataV_S, dataV_S.size());
+        MinSort(dataV_S, j);
         clock_t end_dataV_S = clock(); //end clock
         double elapsed_dataV_S = double(end_dataV_S - start_dataV_S) / CLOCKS_PER_SEC;
 
+        //assert statement
+        for (int i = 1; i < j - 1; i++) {
+            assert(dataV_S.at(i - 1) <= dataV_S.at(i));
+        }
+
         clock_t start_intV_S = clock(); //start clock
-        MinSort(intV_S, intV_S.size());
+        MinSort(intV_S, j);
         clock_t end_intV_S = clock(); //end clock
         double elapsed_intV_S = double(end_intV_S - start_intV_S) / CLOCKS_PER_SEC;
 
+        //assert statement
+        for (int i = 1; i < j - 1; i++) {
+            assert(intV_S.at(i - 1) <= intV_S.at(i));
+        }
+
         cout << "SelectionSort Complete!" << endl << "Sorting using QuickSort..." << endl;
 
         clock_t start_dataV_Q = clock(); //start clock
-        QuickSort(dataV_Q, 0, dataV_Q.size() - 1);
+        QuickSort(dataV_Q, 0, j - 1);
         clock_t end_dataV_Q = clock(); //end clock
         double elapsed_dataV_Q = double(end_dataV_Q - start_dataV_Q) / CLOCKS_PER_SEC; //calculate seconds passed
 
+        //assert statement
+        for (int i = 1; i < j - 1; i++) {
+            assert(dataV_Q.at(i - 1) <= dataV_Q.at(i));
+        }
+
         clock_t start_intV_Q = clock(); //start clock
-        QuickSort(intV_Q, 0, intV_Q.size() - 1);
+        QuickSort(intV_Q, 0, j - 1);
         clock_t end_intV_Q = clock(); //end clock
         double elapsed_intV_Q = double(end_intV_Q - start_intV_Q) / CLOCKS_PER_SEC;
 
+        //assert statement
+        for (int i = 1; i < j - 1; i++) {
+            assert(intV_Q.at(i - 1) <= intV_Q.at(i));
+        }
+
         cout << "QuickSort Complete!" << endl << "Sorting using MergeSort..." << endl;
 
         clock_t start_dataV_M = clock(); //start clock
-        MergeSort(dataV_M, 0, dataV_M.size() - 1);
+        MergeSort(dataV_M, 0, j - 1);
         clock_t end_dataV_M = clock(); //end clock
         double elapsed_dataV_M = double(end_dataV_M - start_dataV_M) / CLOCKS_PER_SEC; //calculate seconds passed
 
+        //assert statement
+        for (int i = 1; i < j - 1; i++) {
+            assert(dataV_M.at(i - 1) <= dataV_M.at(i));
+        }
+
         clock_t start_intV_M = clock(); //start clock
-        MergeSort(intV_M, 0, intV_M.size() - 1);
+        MergeSort(intV_M, 0, j - 1);
         clock_t end_intV_M = clock(); //end clock
         double elapsed_intV_M = double(end_intV_M - start_intV_M) / CLOCKS_PER_SEC;
 
+        //assert statement
+        for (int i = 1; i < j - 1; i++) {
+            assert(intV_M.at(i - 1) <= intV_M.at(i));
+        }
+
         cout << "QuickSort Complete!" << endl;
 
-        cout << "First round of sorting complete!" << endl;
+        cout << "All the vectors are completely sorted. They will now be sorted to see the best case." << endl;
 
         cout << "Sorting using BubbleSort..." << endl;
 
-        clock_t start_dataV_B = clock(); //start clock
-        BubbleSort(dataV_B, dataV_B.size());
-        clock_t end_dataV_B = clock(); //end clock
-        double elapsed_dataV_B2 = double(end_dataV_B - start_dataV_B) / CLOCKS_PER_SEC;
+        clock_t start_dataV_B2 = clock(); //start clock
+        BubbleSort(dataV_B, j);
+        clock_t end_dataV_B2 = clock(); //end clock
+        double elapsed_dataV_B2 = double(end_dataV_B2 - start_dataV_B2) / CLOCKS_PER_SEC;
 
-        clock_t start_intV_B = clock(); //start clock
-        BubbleSort(intV_B, intV_B.size());
-        clock_t end_intV_B = clock(); //end clock
-        double elapsed_intV_B2 = double(end_intV_B - start_intV_B) / CLOCKS_PER_SEC; //calculate seconds passed
+        clock_t start_intV_B2 = clock(); //start clock
+        BubbleSort(intV_B, j);
+        clock_t end_intV_B2 = clock(); //end clock
+        double elapsed_intV_B2 = double(end_intV_B2 - start_intV_B2) / CLOCKS_PER_SEC; //calculate seconds passed
 
 
-        cout << "BubleSort Complete!" << endl << "Sorting using SelectionSort..." << endl;
+        cout << "BubbleSort Complete!" << endl << "Sorting using SelectionSort..." << endl;
 
-        clock_t start_dataV_S = clock(); //start clock
-        MinSort(dataV_S, dataV_S.size());
-        clock_t end_dataV_S = clock(); //end clock
-        double elapsed_dataV_S2 = double(end_dataV_S - start_dataV_S) / CLOCKS_PER_SEC;
+        clock_t start_dataV_S2 = clock(); //start clock
+        MinSort(dataV_S, j);
+        clock_t end_dataV_S2 = clock(); //end clock
+        double elapsed_dataV_S2 = double(end_dataV_S2 - start_dataV_S2) / CLOCKS_PER_SEC;
 
-        clock_t start_intV_S = clock(); //start clock
-        MinSort(intV_S, intV_S.size());
-        clock_t end_intV_S = clock(); //end clock
-        double elapsed_intV_S2 = double(end_intV_S - start_intV_S) / CLOCKS_PER_SEC;
+        clock_t start_intV_S2 = clock(); //start clock
+        MinSort(intV_S, j);
+        clock_t end_intV_S2 = clock(); //end clock
+        double elapsed_intV_S2 = double(end_intV_S2 - start_intV_S2) / CLOCKS_PER_SEC;
 
         cout << "SelectionSort Complete!" << endl << "Sorting using QuickSort..." << endl;
 
-        clock_t start_dataV_Q = clock(); //start clock
-        QuickSort(dataV_Q, 0, dataV_Q.size() - 1);
-        clock_t end_dataV_Q = clock(); //end clock
-        double elapsed_dataV_Q2 = double(end_dataV_Q - start_dataV_Q) / CLOCKS_PER_SEC; //calculate seconds passed
+        clock_t start_dataV_Q2 = clock(); //start clock
+        QuickSort(dataV_Q, 0, j - 1);
+        clock_t end_dataV_Q2 = clock(); //end clock
+        double elapsed_dataV_Q2 = double(end_dataV_Q2 - start_dataV_Q2) / CLOCKS_PER_SEC; //calculate seconds passed
 
-        clock_t start_intV_Q = clock(); //start clock
-        QuickSort(intV_Q, 0, intV_Q.size() - 1);
-        clock_t end_intV_Q = clock(); //end clock
-        double elapsed_intV_Q2 = double(end_intV_Q - start_intV_Q) / CLOCKS_PER_SEC;
+        clock_t start_intV_Q2 = clock(); //start clock
+        QuickSort(intV_Q, 0, j - 1);
+        clock_t end_intV_Q2 = clock(); //end clock
+        double elapsed_intV_Q2 = double(end_intV_Q2 - start_intV_Q2) / CLOCKS_PER_SEC;
 
         cout << "QuickSort Complete!" << endl << "Sorting using MergeSort..." << endl;
 
-        clock_t start_dataV_M = clock(); //start clock
-        MergeSort(dataV_M, 0, dataV_M.size() - 1);
-        clock_t end_dataV_M = clock(); //end clock
-        double elapsed_dataV_M2 = double(end_dataV_M - start_dataV_M) / CLOCKS_PER_SEC; //calculate seconds passed
+        clock_t start_dataV_M2 = clock(); //start clock
+        MergeSort(dataV_M, 0, j - 1);
+        clock_t end_dataV_M2 = clock(); //end clock
+        double elapsed_dataV_M2 = double(end_dataV_M2 - start_dataV_M2) / CLOCKS_PER_SEC; //calculate seconds passed
 
-        clock_t start_intV_M = clock(); //start clock
-        MergeSort(intV_M, 0, intV_M.size() - 1);
-        clock_t end_intV_M = clock(); //end clock
-        double elapsed_intV_M2 = double(end_intV_M - start_intV_M) / CLOCKS_PER_SEC;
+        clock_t start_intV_M2 = clock(); //start clock
+        MergeSort(intV_M, 0, j - 1);
+        clock_t end_intV_M2 = clock(); //end clock
+        double elapsed_intV_M2 = double(end_intV_M2 - start_intV_M2) / CLOCKS_PER_SEC;
 
         cout << "QuickSort Complete!" << endl;
 
         cout << "Second round of sorting complete!" << endl;
 
+
         //prints out all of the times separated by a comma to a csv file created in the beginning of the main function
         out << j << "," << elapsed_dataV_B << "," << elapsed_intV_B << "," << elapsed_dataV_S << "," << elapsed_intV_S
             << "," << elapsed_dataV_Q << "," << elapsed_intV_Q << "," << elapsed_dataV_M << "," << elapsed_intV_M
             << "," << elapsed_dataV_B2 << "," << elapsed_intV_B2 << "," << elapsed_dataV_S2 << "," << elapsed_intV_S2
-            << "," << elapsed_dataV_Q2 << "," << elapsed_intV_Q2 << "," << elapsed_dataV_M2 << "," << elapsed_intV_M2;
+            << "," << elapsed_dataV_Q2 << "," << elapsed_intV_Q2 << "," << elapsed_dataV_M2 << "," << elapsed_intV_M2
+            << '\n';
+        out.flush();
+        //in.close();
 
     }
+
+    in.close();
+    out.close();
+
 
     return 0;
 }

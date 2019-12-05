@@ -35,7 +35,7 @@ ostream& operator<<(ostream& os, const Data& pr) {
 
 //overloads < operator for points
 bool operator < (const Data& hr, const Data &d){
-    return hr.points <d.points;
+    return hr.price <d.price;
     /*if (this->GDPperCapita > hr.GDPperCapita){
         return false;
     }
@@ -46,12 +46,28 @@ bool operator < (const Data& hr, const Data &d){
         return false;
     }*/
 }
+//overloads the <= operator
+bool operator <= (const Data& hr, const Data &d) {
+    return hr.price <= d.price;
+}
 
 //overloads >= operator for points
 bool operator>=(const Data& hr, const Data &d) {
-    return hr.points>d.points;
+    return hr.price>=d.price;
 }
 //overloads > operator for points
 bool operator>(const Data& hr, const Data &d) {
-    return hr.points>d.points;
+    return hr.price>d.price;
+}
+//overloads the = operator
+Data& Data:: operator=(const Data &d){
+    Data temp (d);
+
+    swap(temp.country, country);
+    swap(temp.points, points);
+    swap(temp.price, price);
+    swap(temp.province, province);
+    swap(temp.variety, variety);
+
+    return *this;
 }

@@ -18,8 +18,11 @@ public:
     friend bool operator >= (const Data& hr, const Data &d);
     friend bool operator < (const Data& hr, const Data &d);
     friend bool operator > (const Data& hr, const Data &d);
+    friend bool operator <= (const Data& hr, const Data &d);
+    Data& operator = (const Data &d);
 
-    string country;
+
+        string country;
     int points;
     int price;
     string province;
